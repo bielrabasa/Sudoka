@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "926017099399",
+    "project_id": "provamobils-83881",
+    "storage_bucket": "provamobils-83881.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926017099399:android:84a0a572a80dff12b24a22",
+        "android_client_info": {
+          "package_name": "com.example.nodefirstproj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "926017099399-am4oikqp1n46d8tr2n2rkds4rvlc8v77.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtWiXgRBNobuvbSZTlzcybh0R94Si_wbc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "926017099399-am4oikqp1n46d8tr2n2rkds4rvlc8v77.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
