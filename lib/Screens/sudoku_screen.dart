@@ -39,6 +39,11 @@ class _SudokuScreenState extends State<SudokuScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double gridSize = MediaQuery.of(context).size.width;
+    if(gridSize > MediaQuery.of(context).size.height - 350){
+      gridSize = MediaQuery.of(context).size.height - 350;
+    }
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -51,32 +56,95 @@ class _SudokuScreenState extends State<SudokuScreen> {
           ),
         ),
       ),
-      body: GridView.builder(
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 9),
-        itemCount: sudoku.length,
-        itemBuilder: (context, index) {
-          final item = sudoku[index];
-          return SudokuCell(
-            text: (item != '0') ? item : "",
-            color: ((selectedIndex == index)
-                ? Colors.blue[200]
-                : ((selectedNumber == item && item != '0')
-                    ? Colors.blue[50]
-                    : Colors.white))!,
-            onClick: () {
-              setState(() {
-                if (selectedIndex == index) {
-                  selectedIndex = null;
-                  selectedNumber = null;
-                } else {
-                  selectedIndex = index;
-                  selectedNumber = item;
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Center(
+            child: SizedBox(
+              width: gridSize,
+              height: gridSize,
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 9),
+                itemCount: sudoku.length,
+                itemBuilder: (context, index) {
+                  final item = sudoku[index];
+                  return SudokuCell(
+                    text: (item != '0') ? item : "",
+                    color: ((selectedIndex == index)
+                        ? Colors.blue[200]
+                        : ((selectedNumber == item && item != '0')
+                            ? Colors.blue[50]
+                            : Colors.white))!,
+                    onClick: () {
+                      setState(() {
+                        if (selectedIndex == index) {
+                          selectedIndex = null;
+                          selectedNumber = null;
+                        } else {
+                          selectedIndex = index;
+                          selectedNumber = item;
+                        }
+                      });
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+          //const SizedBox(height: 30),
+          SizedBox(
+            height: 50,
+            width: 200,
+            child: SudokuCell(
+              text: "<--",
+              color: Colors.green,
+              onClick: () {
+                if (selectedIndex != null) {
+                  setState(() {
+                    sudoku = sudoku.replaceRange(
+                      selectedIndex!,
+                      selectedIndex! + 1,
+                      '0',
+                    );
+                    selectedNumber = '0';
+                  });
                 }
-              });
-            },
-          );
-        },
+              },
+            ),
+          ),
+
+          SizedBox(
+            height: 200,
+            width: 200,
+            child: Center(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3),
+                itemCount: 9,
+                itemBuilder: (context, index) {
+                  final num = index + 1;
+                  return SudokuCell(
+                    text: num.toString(),
+                    color: Colors.green,
+                    onClick: () {
+                      if (selectedIndex != null) {
+                        setState(() {
+                          sudoku = sudoku.replaceRange(
+                            selectedIndex!,
+                            selectedIndex! + 1,
+                            num.toString(),
+                          );
+                          selectedNumber = num.toString();
+                        });
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
