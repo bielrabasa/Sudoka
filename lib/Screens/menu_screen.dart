@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nodefirstproj/Screens/userScreen.dart';
+import 'package:nodefirstproj/Screens/user_screen.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});

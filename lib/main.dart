@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:nodefirstproj/firebase_options.dart';
 
-import 'package:nodefirstproj/Screens/menuScreen.dart';
-import 'package:nodefirstproj/Screens/userScreen.dart';
-import 'package:nodefirstproj/Screens/waitingScreen.dart';
-import 'package:nodefirstproj/Screens/sudokuScreen.dart';
-import 'package:nodefirstproj/Screens/rankingScreen.dart';
+import 'package:nodefirstproj/Screens/menu_screen.dart';
+import 'package:nodefirstproj/Screens/user_screen.dart';
+import 'package:nodefirstproj/Screens/waiting_screen.dart';
+import 'package:nodefirstproj/Screens/sudoku_screen.dart';
+import 'package:nodefirstproj/Screens/ranking_screen.dart';
 
 void main() async {
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/menu',
+      initialRoute: '/sudoku',
       routes: {
         '/menu': (context) => const MenuScreen(),
         '/userInfo': (context) => const UserScreen(),
