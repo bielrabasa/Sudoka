@@ -1,8 +1,13 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:nodefirstproj/firebase_options.dart';
-import 'package:nodefirstproj/screens/chat_list_screen.dart';
-import 'package:nodefirstproj/screens/chat_screen.dart';
+
+import 'package:nodefirstproj/Screens/menuScreen.dart';
+import 'package:nodefirstproj/Screens/userScreen.dart';
+import 'package:nodefirstproj/Screens/waitingScreen.dart';
+import 'package:nodefirstproj/Screens/sudokuScreen.dart';
+import 'package:nodefirstproj/Screens/rankingScreen.dart';
 
 void main() async {
 
@@ -20,10 +25,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/chats',
+      initialRoute: '/menu',
       routes: {
-        '/chats': (context) => const ChatListScreen(),
-        '/messages': (context) => const ChatScreen(),
+        '/menu': (context) => const MenuScreen(),
+        '/userInfo': (context) => const UserScreen(),
+        '/waiting': (context) => const WaitingScreen(),
+        '/sudoku': (context) => const SudokuScreen(),
+        '/ranking': (context) => const RankingScreen(),
       },
     );
   }
