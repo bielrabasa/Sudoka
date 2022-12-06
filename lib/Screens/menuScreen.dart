@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nodefirstproj/Screens/userScreen.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -8,7 +9,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  bool isUser = true;
+  bool isUser = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,16 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
           actions: [
             (isUser)
-                ? const IconButton(
-                    onPressed: null,
-                    icon: Icon(
+                ? IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const UserScreen(),
+                        ),
+                      );
+                      setState(() {});
+                    },
+                    icon: const Icon(
                       Icons.account_box,
                       color: Colors.white,
                       size: 35,
@@ -59,7 +67,11 @@ class LogInUser extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text("User"),
+                const Text(
+                  "Username",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
                 Container(
                   width: 200,
                   height: 25,
@@ -67,7 +79,11 @@ class LogInUser extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(35))),
                 ),
-                const Text("Password"),
+                const Text(
+                  "Password",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
                 Container(
                   width: 200,
                   height: 25,
@@ -84,8 +100,18 @@ class LogInUser extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: const [
-              ElevatedButton(onPressed: null, child: Text("Log In")),
-              ElevatedButton(onPressed: null, child: Text("New user"))
+              ElevatedButton(
+                  onPressed: null,
+                  child: Text(
+                    "Log In",
+                    style: TextStyle(color: Colors.black),
+                  )),
+              ElevatedButton(
+                  onPressed: null,
+                  child: Text(
+                    "New user",
+                    style: TextStyle(color: Colors.black),
+                  ))
             ],
           )
         ],
