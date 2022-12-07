@@ -16,34 +16,43 @@ class _SudokuScreenState extends State<SudokuScreen> {
   int? selectedIndex;
   String? selectedNumber;
 
-  String sudoku = SudokuGenerator(emptySquares: 50)
-      .newSudoku
-      .toString()
-      .replaceAll('[', '')
-      .replaceAll(']', '')
-      .replaceAll(',', '')
-      .replaceAll(' ', '');
+  late String sudoku;
+  late String solvedSudoku;
+  List<bool> blocked = [];
 
-  /*String generateSudoku() {
+  String generateSudoku() {
+    //Generate sudoku
     var l = SudokuGenerator(emptySquares: 54).newSudoku.toList();
     String s = "";
 
+    //Clean string
     for (int i = 0; i < l.length; i++) {
       for (int j = 0; j < l[i].length; j++) {
         s += l[i][j].toString();
       }
     }
 
+    //Generate blocked cells
+    for (int i = 0; i < s.length; i++) {
+      blocked.add(s[i] != '0');
+    }
+
     return s;
-  }*/
+  }
+
+  @override
+  void initState() {
+    sudoku = generateSudoku();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     double gridSize = MediaQuery.of(context).size.width;
-    if(gridSize > MediaQuery.of(context).size.height - 350){
+    if (gridSize > MediaQuery.of(context).size.height - 350) {
       gridSize = MediaQuery.of(context).size.height - 350;
     }
-    
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -69,13 +78,24 @@ class _SudokuScreenState extends State<SudokuScreen> {
                 itemCount: sudoku.length,
                 itemBuilder: (context, index) {
                   final item = sudoku[index];
+
+                  Color col = (blocked[index]) ? Colors.black54 : Colors.lightBlue;
+
+                  if (selectedIndex == index) {
+                    //Selected
+                    col = col.withOpacity(0.6);
+                  } else if (selectedNumber == item && item != '0') {
+                    //Same number
+                    col = col.withOpacity(0.3);
+                  } else if (blocked[index]) {
+                    col = col.withOpacity(0.1);
+                  } else {
+                    col = Colors.white;
+                  }
+
                   return SudokuCell(
                     text: (item != '0') ? item : "",
-                    color: ((selectedIndex == index)
-                        ? Colors.blue[200]
-                        : ((selectedNumber == item && item != '0')
-                            ? Colors.blue[50]
-                            : Colors.white))!,
+                    color: col,
                     onClick: () {
                       setState(() {
                         if (selectedIndex == index) {
@@ -100,7 +120,7 @@ class _SudokuScreenState extends State<SudokuScreen> {
               text: "<--",
               color: Colors.green,
               onClick: () {
-                if (selectedIndex != null) {
+                if (selectedIndex != null && !blocked[selectedIndex!]) {
                   setState(() {
                     sudoku = sudoku.replaceRange(
                       selectedIndex!,
@@ -128,7 +148,7 @@ class _SudokuScreenState extends State<SudokuScreen> {
                     text: num.toString(),
                     color: Colors.green,
                     onClick: () {
-                      if (selectedIndex != null) {
+                      if (selectedIndex != null && !blocked[selectedIndex!]) {
                         setState(() {
                           sudoku = sudoku.replaceRange(
                             selectedIndex!,
@@ -164,16 +184,21 @@ class SudokuCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: color,
-      child: InkWell(
-        onTap: onClick,
-        child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(
-              fontSize: 25,
-              color: Colors.black,
+    return Padding(
+      padding: const EdgeInsets.all(2),
+      child: Material(
+        elevation: 3,
+        borderRadius: const BorderRadius.all(Radius.circular(6)),
+        color: Color.alphaBlend(color, Colors.white),
+        child: InkWell(
+          onTap: onClick,
+          child: Center(
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 25,
+                color: Colors.black,
+              ),
             ),
           ),
         ),
