@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserScreen extends StatefulWidget {
@@ -21,6 +22,18 @@ class _UserScreenState extends State<UserScreen> {
             fontWeight: FontWeight.bold,
             letterSpacing: 12,
           ),
+        ),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+            )
+          ],
         ),
       ),
     );

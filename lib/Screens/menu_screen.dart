@@ -9,7 +9,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  bool isUser = false;
+  bool isUser = true;
 
   @override
   Widget build(BuildContext context) {
