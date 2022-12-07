@@ -13,13 +13,21 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     final db = FirebaseFirestore.instance;
+
+    //TUDU: get this on authentication
+    const String userId = "E5QRXWYStvP1ORIyLwbcoQj655B2";
+
+    //TUDU: get streambuilder out
+
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: StreamBuilder(
-          stream: db.collection("/Users").snapshots(),
+          stream: db.doc("/Users/$userId").snapshots(),
           builder: (BuildContext context,
-              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+              AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.hasError) {
               return ErrorWidget(snapshot.error.toString());
             }
@@ -28,11 +36,10 @@ class _UserScreenState extends State<UserScreen> {
                 child: CircularProgressIndicator(),
               );
             }
-            final querySnap = snapshot.data!;
-            final docs = querySnap.docs;
+            final docSnap = snapshot.data!;
             return Text(
               //TUDU: search current User, not first
-              docs.first['User'],
+              docSnap['Name'],
               style: const TextStyle(
                 fontSize: 37,
                 fontWeight: FontWeight.bold,
@@ -43,9 +50,9 @@ class _UserScreenState extends State<UserScreen> {
         ),
       ),
       body: StreamBuilder(
-        stream: db.collection("/Users").snapshots(),
+        stream: db.doc("/Users/$userId").snapshots(),
         builder: (BuildContext context,
-            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+            AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.hasError) {
             return ErrorWidget(snapshot.error.toString());
           }
@@ -54,49 +61,41 @@ class _UserScreenState extends State<UserScreen> {
               child: CircularProgressIndicator(),
             );
           }
-          final querySnap = snapshot.data!;
-          final docs = querySnap.docs;
-          return ListView.builder(
-            itemCount: docs.length,
-            itemBuilder: (context, index) {
-              final doc = docs[index];
-              final Timestamp t = doc['Last Time Play'];
-              return Column(
+          final doc = snapshot.data!;
+          return Column(
+            children: [
+              Text(
+                doc['Sudokus Complete'].toString(),
+                style: const TextStyle(fontSize: 16),
+              ),
+              Text(
+                doc['Wins Online'].toString(),
+                style: const TextStyle(fontSize: 16),
+              ),
+              Text(
+                doc['Win Streak'].toString(),
+                style: const TextStyle(fontSize: 16),
+              ),
+              Text(
+                doc['Better Time'].toString(),
+                style: const TextStyle(fontSize: 16),
+              ),
+              Text(
+                doc['Last Time Play'].toDate().toString(),
+                style: const TextStyle(fontSize: 16),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    doc['Sudokus Complete'].toString(),
-                    style: const TextStyle(fontSize: 16),
+                  IconButton(
+                    icon: const Icon(Icons.logout),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    },
                   ),
-                  Text(
-                    doc['Wins Online'].toString(),
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    doc['Win Streak'].toString(),
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    doc['Better Time'].toString(),
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    t.toDate().toString(),
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.logout),
-                        onPressed: () {
-                          FirebaseAuth.instance.signOut();
-                        },
-                      ),
-                    ],
-                  )
                 ],
-              );
-            },
+              )
+            ],
           );
         },
       ),

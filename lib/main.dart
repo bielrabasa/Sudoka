@@ -5,7 +5,7 @@ import 'package:nodefirstproj/Screens/ranking_screen.dart';
 import 'package:nodefirstproj/Screens/sudoku_screen.dart';
 import 'package:nodefirstproj/Screens/user_screen.dart';
 import 'package:nodefirstproj/Screens/waiting_screen.dart';
-import 'package:nodefirstproj/Widget/AuthGate.dart';
+import 'package:nodefirstproj/Widget/auth_gate.dart';
 import 'package:nodefirstproj/firebase_options.dart';
 
 /*void main() async {
@@ -25,10 +25,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/sudoku',
+      initialRoute: '/',
       routes: {
         '/': (context) => const MenuScreen(),
-        '/Users': (context) => const UserScreen(),
+        '/user': (context) => const UserScreen(),
         '/waiting': (context) => const WaitingScreen(),
         '/sudoku': (context) => const SudokuScreen(),
         '/ranking': (context) => const RankingScreen(),

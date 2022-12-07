@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nodefirstproj/Screens/user_screen.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -28,11 +27,7 @@ class _MenuScreenState extends State<MenuScreen> {
             (isUser)
                 ? IconButton(
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const UserScreen(),
-                        ),
-                      );
+                      Navigator.pushNamed(context, "/user");
                       setState(() {});
                     },
                     icon: const Icon(
