@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/menu',
+      initialRoute: '/sudoku',
       routes: {
-        '/menu': (context) => const MenuScreen(),
+        '/': (context) => const MenuScreen(),
         '/Users': (context) => const UserScreen(),
         '/waiting': (context) => const WaitingScreen(),
         '/sudoku': (context) => const SudokuScreen(),
