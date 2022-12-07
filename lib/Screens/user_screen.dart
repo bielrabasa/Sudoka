@@ -13,13 +13,9 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     final db = FirebaseFirestore.instance;
-
-    //TUDU: get this on authentication
-    const String userId = "E5QRXWYStvP1ORIyLwbcoQj655B2";
+    String userId = FirebaseAuth.instance.currentUser!.uid;
 
     //TUDU: get streambuilder out
-
-
 
     return Scaffold(
       appBar: AppBar(
