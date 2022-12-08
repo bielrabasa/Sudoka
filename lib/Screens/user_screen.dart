@@ -57,40 +57,112 @@ class _UserScreenState extends State<UserScreen> {
             );
           }
           final doc = snapshot.data!;
-          return Column(
-            children: [
-              Text(
-                doc['Sudokus Complete'].toString(),
-                style: const TextStyle(fontSize: 16),
-              ),
-              Text(
-                doc['Wins Online'].toString(),
-                style: const TextStyle(fontSize: 16),
-              ),
-              Text(
-                doc['Win Streak'].toString(),
-                style: const TextStyle(fontSize: 16),
-              ),
-              Text(
-                doc['Better Time'].toString(),
-                style: const TextStyle(fontSize: 16),
-              ),
-              Text(
-                doc['Last Time Play'].toDate().toString(),
-                style: const TextStyle(fontSize: 16),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.logout),
-                    onPressed: () {
-                      FirebaseAuth.instance.signOut();
-                    },
+          return Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  height: 60,
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 150, 190, 210),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
-                ],
-              )
-            ],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text("Sudokus Complete:\t\t"),
+                      Text(
+                        doc['Sudokus Complete'].toString(),
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 60,
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 150, 190, 210),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text("Wins Online:\t\t"),
+                      Text(
+                        doc['Wins Online'].toString(),
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 60,
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 150, 190, 210),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text("Win Streak:\t\t"),
+                      Text(
+                        doc['Win Streak'].toString(),
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 60,
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 150, 190, 210),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text("Better Time:\t\t"),
+                      Text(
+                        doc['Better Time'].toString(),
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 60,
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 150, 190, 210),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text("Last Sudoku:\t\t"),
+                      Text(
+                        doc['Last Time Play'].toDate().toString(),
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.logout,
+                      ),
+                      iconSize: 69,
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
           );
         },
       ),

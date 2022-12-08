@@ -57,7 +57,6 @@ class _SudokuScreenState extends State<SudokuScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     //Resize Sudoku to leave space for everything
     const int nonSudokuSpace = 420;
     double gridSize = MediaQuery.of(context).size.width;
@@ -125,8 +124,9 @@ class _SudokuScreenState extends State<SudokuScreen> {
                     itemBuilder: (context, index) {
                       final item = sudoku[index];
 
-                      Color col =
-                          (blocked[index]) ? Colors.black54 : Colors.lightBlueAccent;
+                      Color col = (blocked[index])
+                          ? Colors.black54
+                          : Colors.lightBlueAccent;
 
                       if (selectedIndex == index) {
                         //Selected
@@ -228,7 +228,7 @@ class _SudokuScreenState extends State<SudokuScreen> {
               color: Colors.deepPurple[200]!,
               text: "Submit",
               onClick: () {
-                if(sudoku == solvedSudoku){
+                if (sudoku == solvedSudoku) {
                   Navigator.pushNamed(context, "/ranking");
                 }
               },

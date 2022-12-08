@@ -22,16 +22,19 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
           ),
           actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/user");
-                  setState(() {});
-                },
-                icon: const Icon(
-                  Icons.account_box,
-                  color: Colors.white,
-                  size: 35,
-                ))
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/user");
+                    setState(() {});
+                  },
+                  icon: const Icon(
+                    Icons.account_box,
+                    color: Colors.white,
+                    size: 35,
+                  )),
+            )
           ],
         ),
         body: const LogedUser());
