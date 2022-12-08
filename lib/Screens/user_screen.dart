@@ -68,15 +68,18 @@ class _UserScreenState extends State<UserScreen> {
                     color: Color.fromARGB(255, 150, 190, 210),
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text("Sudokus Complete:\t\t"),
-                      Text(
-                        doc['Sudokus Complete'].toString(),
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 75.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Sudokus Complete:"),
+                        Text(
+                          doc['Sudokus Complete'].toString(),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -85,15 +88,18 @@ class _UserScreenState extends State<UserScreen> {
                     color: Color.fromARGB(255, 150, 190, 210),
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text("Wins Online:\t\t"),
-                      Text(
-                        doc['Wins Online'].toString(),
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 75.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Wins Online:"),
+                        Text(
+                          doc['Wins Online'].toString(),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -102,15 +108,18 @@ class _UserScreenState extends State<UserScreen> {
                     color: Color.fromARGB(255, 150, 190, 210),
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text("Win Streak:\t\t"),
-                      Text(
-                        doc['Win Streak'].toString(),
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 75.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Win Streak:"),
+                        Text(
+                          doc['Win Streak'].toString(),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -119,15 +128,18 @@ class _UserScreenState extends State<UserScreen> {
                     color: Color.fromARGB(255, 150, 190, 210),
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text("Better Time:\t\t"),
-                      Text(
-                        doc['Better Time'].toString(),
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 75.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Better Time:"),
+                        Text(
+                          doc['Better Time'].toString(),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -136,15 +148,18 @@ class _UserScreenState extends State<UserScreen> {
                     color: Color.fromARGB(255, 150, 190, 210),
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text("Last Sudoku:\t\t"),
-                      Text(
-                        doc['Last Time Play'].toDate().toString(),
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 75.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Last Sudoku:"),
+                        Text(
+                          doc['Last Time Play'].toDate().toString(),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Row(
