@@ -8,8 +8,6 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  bool isUser = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,111 +22,44 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
           ),
           actions: [
-            (isUser)
-                ? IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/user");
-                      setState(() {});
-                    },
-                    icon: const Icon(
-                      Icons.account_box,
-                      color: Colors.white,
-                      size: 35,
-                    ))
-                : Container(),
+            IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/user");
+                  setState(() {});
+                },
+                icon: const Icon(
+                  Icons.account_box,
+                  color: Colors.white,
+                  size: 35,
+                ))
           ],
         ),
-        body: (isUser) ? const LogedUser() : const LogInUser());
+        body: const LogedUser());
   }
 }
 
-class LogInUser extends StatelessWidget {
-  const LogInUser({
+class LogedUser extends StatefulWidget {
+  const LogedUser({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<LogedUser> createState() => _LogedUserState();
+}
+
+class _LogedUserState extends State<LogedUser> {
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: 350,
-            height: 200,
-            decoration: const BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.all(Radius.circular(35))),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const Text(
-                  "Username",
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  width: 200,
-                  height: 25,
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(35))),
-                ),
-                const Text(
-                  "Password",
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  width: 200,
-                  height: 25,
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(35))),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [
-              ElevatedButton(
-                  onPressed: null,
-                  child: Text(
-                    "Log In",
-                    style: TextStyle(color: Colors.black),
-                  )),
-              ElevatedButton(
-                  onPressed: null,
-                  child: Text(
-                    "New user",
-                    style: TextStyle(color: Colors.black),
-                  ))
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class LogedUser extends StatelessWidget {
-  const LogedUser({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
           ElevatedButton(
-            onPressed: null,
-            child: Text(
+            onPressed: () {
+              Navigator.pushNamed(context, "/waiting");
+              setState(() {});
+            },
+            child: const Text(
               "Play Online",
               style: TextStyle(
                   color: Colors.black,
@@ -136,10 +67,13 @@ class LogedUser extends StatelessWidget {
                   fontSize: 35),
             ),
           ),
-          SizedBox(height: 50),
+          const SizedBox(height: 50),
           ElevatedButton(
-            onPressed: null,
-            child: Text(
+            onPressed: () {
+              Navigator.pushNamed(context, "/sudoku");
+              setState(() {});
+            },
+            child: const Text(
               "Play Offline",
               style: TextStyle(
                 color: Colors.black,

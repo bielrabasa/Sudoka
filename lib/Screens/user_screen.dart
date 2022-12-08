@@ -34,7 +34,6 @@ class _UserScreenState extends State<UserScreen> {
             }
             final docSnap = snapshot.data!;
             return Text(
-              //TUDU: search current User, not first
               docSnap['Name'],
               style: const TextStyle(
                 fontSize: 37,
