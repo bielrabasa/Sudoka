@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfire_ui/auth.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -10,6 +13,21 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user != null &&
+          (DateTime.now().minute == user.metadata.creationTime!.minute)) {
+        FirebaseFirestore.instance.doc("/Users/$userId").set({
+          'Better Time': '0.0',
+          'Name': 'NewUser',
+          'Sudokus Complete': '0',
+          'Win Streak': '0',
+          'Wins Online': '0',
+          'Last Time Play': DateTime.now().toUtc()
+        });
+      }
+    });
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
