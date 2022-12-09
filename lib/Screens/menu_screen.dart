@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/auth.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -76,34 +75,73 @@ class _LogedUserState extends State<LogedUser> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(
-            onPressed: () {
+          MenuButton(
+            onClick: () {
+              //TUDU: set player in the waiting list
               Navigator.pushNamed(context, "/waiting");
             },
-            child: const Text(
-              "Play Online",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 35,
-              ),
-            ),
+            text: "Play Online",
+            icon: Icons.wifi,
           ),
-          const SizedBox(height: 50),
-          ElevatedButton(
-            onPressed: () {
+          const SizedBox(height: 40),
+          MenuButton(
+            onClick: () {
               Navigator.pushNamed(context, "/sudoku");
             },
-            child: const Text(
-              "Play Offline",
+            text: "Play Offline",
+            icon: Icons.home,
+          ),
+          const SizedBox(height: 40),
+          MenuButton(
+            onClick: () {
+              Navigator.pushNamed(context, "/ranking");
+            },
+            text: "Last game ranking",
+            icon: Icons.leaderboard,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MenuButton extends StatelessWidget {
+  final void Function() onClick;
+  final String text;
+  final IconData icon;
+
+  const MenuButton({
+    Key? key,
+    required this.onClick,
+    required this.text,
+    required this.icon,
+  }) : super(key: key);
+
+  final Color color = Colors.black;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      child: ElevatedButton(
+        onPressed: onClick,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              text,
               style: TextStyle(
-                color: Colors.black,
+                color: color,
                 fontWeight: FontWeight.bold,
                 fontSize: 35,
               ),
             ),
-          ),
-        ],
+            Icon(
+              icon,
+              color: color,
+            ),
+          ],
+        ),
       ),
     );
   }
