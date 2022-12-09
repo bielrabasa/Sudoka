@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nodefirstproj/Widget/back_arrow_question.dart';
 import 'package:nodefirstproj/Widget/sudoku_cell.dart';
 import 'package:sudoku_solver_generator/sudoku_solver_generator.dart';
 
@@ -6,8 +7,6 @@ class SudokuScreen extends StatefulWidget {
   const SudokuScreen({
     super.key,
   });
-
-  // String sudoku = SudokuGenerator(emptySquares: 54).newSudoku.toString();
 
   @override
   State<SudokuScreen> createState() => _SudokuScreenState();
@@ -78,6 +77,12 @@ class _SudokuScreenState extends State<SudokuScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: BackArrowQuestion(
+            question: "Do you want to forfeit?",
+            onExit: () {
+              //TUDU: Set Current sudoku is failed (or forfeited)
+              Navigator.of(context).popUntil((route) => route.isFirst);
+            }),
         backgroundColor: Colors.black,
         title: const Text(
           "SUDOKA",
@@ -91,6 +96,8 @@ class _SudokuScreenState extends State<SudokuScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          const SizedBox(height: 5),
+
           Center(
             child: Stack(
               children: [
@@ -230,8 +237,7 @@ class _SudokuScreenState extends State<SudokuScreen> {
               text: "Submit",
               onClick: () {
                 if (sudoku == solvedSudoku) {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, "/ranking");
+                  Navigator.popAndPushNamed(context, "/ranking");
                 }
               },
             ),

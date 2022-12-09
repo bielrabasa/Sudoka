@@ -29,33 +29,34 @@ class _MenuScreenState extends State<MenuScreen> {
       }
     });
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: const Text(
-            "SUDOKA",
-            style: TextStyle(
-              fontSize: 37,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 12,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: const Text(
+          "SUDOKA",
+          style: TextStyle(
+            fontSize: 37,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 12,
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/user");
+              },
+              icon: const Icon(
+                Icons.account_box,
+                color: Colors.white,
+                size: 35,
+              ),
             ),
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/user");
-                    setState(() {});
-                  },
-                  icon: const Icon(
-                    Icons.account_box,
-                    color: Colors.white,
-                    size: 35,
-                  )),
-            )
-          ],
-        ),
-        body: const LogedUser());
+        ],
+      ),
+      body: const LogedUser(),
+    );
   }
 }
 
@@ -78,21 +79,20 @@ class _LogedUserState extends State<LogedUser> {
           ElevatedButton(
             onPressed: () {
               Navigator.pushNamed(context, "/waiting");
-              setState(() {});
             },
             child: const Text(
               "Play Online",
               style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 35),
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 35,
+              ),
             ),
           ),
           const SizedBox(height: 50),
           ElevatedButton(
             onPressed: () {
               Navigator.pushNamed(context, "/sudoku");
-              setState(() {});
             },
             child: const Text(
               "Play Offline",
@@ -102,7 +102,7 @@ class _LogedUserState extends State<LogedUser> {
                 fontSize: 35,
               ),
             ),
-          )
+          ),
         ],
       ),
     );
