@@ -18,11 +18,11 @@ class _MenuScreenState extends State<MenuScreen> {
       if (user != null &&
           (DateTime.now().minute == user.metadata.creationTime!.minute)) {
         FirebaseFirestore.instance.doc("/Users/$userId").set({
-          'Better Time': '0.0',
+          'Better Time': 0.0,
           'Name': 'NewUser',
-          'Sudokus Complete': '0',
-          'Win Streak': '0',
-          'Wins Online': '0',
+          'Sudokus Complete': 0,
+          'Win Streak': 0,
+          'Wins Online': 0,
           'Last Time Play': DateTime.now().toUtc()
         });
       }
