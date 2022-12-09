@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nodefirstproj/Widget/sudoku_cell.dart';
 import 'package:sudoku_solver_generator/sudoku_solver_generator.dart';
 
 class SudokuScreen extends StatefulWidget {
@@ -168,8 +169,8 @@ class _SudokuScreenState extends State<SudokuScreen> {
           SizedBox(
             height: 50,
             width: 200,
-            child: SudokuCell(
-              text: "0",
+            child: SudokuCellIcon(
+              icon: Icons.keyboard_backspace,
               color: Colors.deepPurple[200]!,
               onClick: () {
                 if (selectedIndex != null && !blocked[selectedIndex!]) {
@@ -229,49 +230,13 @@ class _SudokuScreenState extends State<SudokuScreen> {
               text: "Submit",
               onClick: () {
                 if (sudoku == solvedSudoku) {
+                  Navigator.pop(context);
                   Navigator.pushNamed(context, "/ranking");
                 }
               },
             ),
           )
         ],
-      ),
-    );
-  }
-}
-
-class SudokuCell extends StatelessWidget {
-  final String text;
-  final Color color;
-  final void Function() onClick;
-
-  const SudokuCell({
-    super.key,
-    required this.text,
-    required this.color,
-    required this.onClick,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(2),
-      child: Material(
-        elevation: 3,
-        borderRadius: const BorderRadius.all(Radius.circular(6)),
-        color: Color.alphaBlend(color, Colors.white),
-        child: InkWell(
-          onTap: onClick,
-          child: Center(
-            child: Text(
-              text,
-              style: const TextStyle(
-                fontSize: 25,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
