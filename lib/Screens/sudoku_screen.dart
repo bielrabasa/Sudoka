@@ -21,7 +21,7 @@ class _SudokuScreenState extends State<SudokuScreen> {
   List<bool> blocked = [];
 
   List<List<int>> generateSudoku() {
-    return SudokuGenerator(emptySquares: 1).newSudoku.toList();
+    return SudokuGenerator(emptySquares: 50).newSudoku.toList();
   }
 
   String listToString(List<List<int>> list) {

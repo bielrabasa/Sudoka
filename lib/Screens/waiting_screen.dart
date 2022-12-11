@@ -1,7 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:nodefirstproj/Widget/back_arrow_question.dart';
-import 'dart:math';
+//import 'dart:math';
 
 class WaitingScreen extends StatelessWidget {
   const WaitingScreen({super.key});
