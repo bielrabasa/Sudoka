@@ -33,14 +33,25 @@ class _UserScreenState extends State<UserScreen> {
               );
             }
             final docSnap = snapshot.data!;
-            return Text(
+            return TextField(
+              decoration: InputDecoration(
+                labelText: docSnap['Name'],
+                labelStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 37,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 12,
+                ),
+              ),
+            );
+            /*(
               docSnap['Name'],
               style: const TextStyle(
                 fontSize: 37,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 12,
               ),
-            );
+            );*/
           },
         ),
       ),
