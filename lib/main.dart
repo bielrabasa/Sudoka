@@ -8,16 +8,6 @@ import 'package:nodefirstproj/Screens/waiting_screen.dart';
 import 'package:nodefirstproj/Widget/auth_gate.dart';
 import 'package:nodefirstproj/firebase_options.dart';
 
-/*void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(const MyApp());
-}
-
-*/
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
