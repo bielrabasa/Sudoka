@@ -56,7 +56,7 @@ class _UserScreenState extends State<UserScreen> {
                     color: Colors.white,
                     fontSize: 37,
                     fontWeight: FontWeight.bold,
-                    letterSpacing: 12,
+                    letterSpacing: 2,
                   ),
                 ),
                 style: const TextStyle(
