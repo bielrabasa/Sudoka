@@ -43,15 +43,17 @@ class _UserScreenState extends State<UserScreen> {
                   letterSpacing: 12,
                 ),
               ),
-            );
-            /*(
-              docSnap['Name'],
               style: const TextStyle(
-                fontSize: 37,
+                color: Colors.white,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
-                letterSpacing: 12,
               ),
-            );*/
+              onSubmitted: (value) {
+                FirebaseFirestore.instance.doc("/Users/$userId").update(
+                  {'Name': value},
+                );
+              },
+            );
           },
         ),
       ),
