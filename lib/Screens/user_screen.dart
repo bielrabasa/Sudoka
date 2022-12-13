@@ -37,7 +37,8 @@ class _UserScreenState extends State<UserScreen> {
           title: StreamBuilder(
             stream: db.doc("/Users/$userId").snapshots(),
             builder: (BuildContext context,
-                AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+                AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
+                    snapshot) {
               if (snapshot.hasError) {
                 return ErrorWidget(snapshot.error.toString());
               }
@@ -68,8 +69,8 @@ class _UserScreenState extends State<UserScreen> {
                   String name = docSnap['Name'].toString();
                   controller.value = TextEditingValue(
                     text: name,
-                    selection: TextSelection(
-                        baseOffset: 0, extentOffset: name.length),
+                    selection:
+                        TextSelection(baseOffset: 0, extentOffset: name.length),
                   );
                 },
                 onSubmitted: (value) {
@@ -97,6 +98,8 @@ class _UserScreenState extends State<UserScreen> {
               );
             }
             final doc = snapshot.data!;
+            String LastDate = doc['Last Time Play'].toDate().toString();
+
             return Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
@@ -195,7 +198,7 @@ class _UserScreenState extends State<UserScreen> {
                         children: [
                           const Text("Last Sudoku:"),
                           Text(
-                            doc['Last Time Play'].toDate().toString(),
+                            LastDate.substring(0, 10),
                             style: const TextStyle(fontSize: 16),
                           ),
                         ],
