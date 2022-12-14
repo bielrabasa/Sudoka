@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nodefirstproj/Widget/doc_builder.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
@@ -24,8 +25,6 @@ class _UserScreenState extends State<UserScreen> {
     final db = FirebaseFirestore.instance;
     String userId = FirebaseAuth.instance.currentUser!.uid;
 
-    //TUDU: get streambuilder out
-
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -34,25 +33,17 @@ class _UserScreenState extends State<UserScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
-          title: StreamBuilder(
-            stream: db.doc("/Users/$userId").snapshots(),
-            builder: (BuildContext context,
-                AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
-                    snapshot) {
-              if (snapshot.hasError) {
-                return ErrorWidget(snapshot.error.toString());
-              }
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              final docSnap = snapshot.data!;
+          title: DocSnapBuilder(
+            docRef: db.doc("/Users/$userId"),
+            builder: (
+              BuildContext context,
+              DocumentSnapshot<Map<String, dynamic>> doc,
+            ) {
               return TextField(
                 controller: controller,
                 focusNode: focusController,
                 decoration: InputDecoration(
-                  labelText: docSnap['Name'],
+                  labelText: doc['Name'],
                   labelStyle: const TextStyle(
                     color: Colors.white,
                     fontSize: 37,
@@ -66,7 +57,7 @@ class _UserScreenState extends State<UserScreen> {
                   fontWeight: FontWeight.bold,
                 ),
                 onTap: () {
-                  String name = docSnap['Name'].toString();
+                  String name = doc['Name'].toString();
                   controller.value = TextEditingValue(
                     text: name,
                     selection:
@@ -85,21 +76,13 @@ class _UserScreenState extends State<UserScreen> {
             },
           ),
         ),
-        body: StreamBuilder(
-          stream: db.doc("/Users/$userId").snapshots(),
-          builder: (BuildContext context,
-              AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-            if (snapshot.hasError) {
-              return ErrorWidget(snapshot.error.toString());
-            }
-            if (!snapshot.hasData) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            final doc = snapshot.data!;
-            String LastDate = doc['Last Time Play'].toDate().toString();
-
+        body: DocSnapBuilder(
+          docRef: db.doc("/Users/$userId"),
+          builder: (
+            BuildContext context,
+            DocumentSnapshot<Map<String, dynamic>> doc,
+          ) {
+            final String lastDate = doc['Last Time Play'].toDate().toString();
             return Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
@@ -198,7 +181,7 @@ class _UserScreenState extends State<UserScreen> {
                         children: [
                           const Text("Last Sudoku:"),
                           Text(
-                            LastDate.substring(0, 10),
+                            lastDate.substring(0, 10),
                             style: const TextStyle(fontSize: 16),
                           ),
                         ],
