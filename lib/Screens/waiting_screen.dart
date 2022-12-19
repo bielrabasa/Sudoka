@@ -55,54 +55,59 @@ class WaitingScreen extends StatelessWidget {
             final querySnap = snapshot.data!;
             final docs = querySnap.docs;
             return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 150.0),
-                  child: Row(
-                    children: const [
-                      Text(
-                        "Room X",
-                        style: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic),
+                const SizedBox(height: 50),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 150.0),
+                      child: Row(
+                        children: const [
+                          Text(
+                            "Room X",
+                            style: TextStyle(
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                for (var i = 0; i < docs.length; i++)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("-\t"),
-                      Text(
-                        docs[i]["userName"],
-                        style: const TextStyle(
-                          fontSize: 25,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    for (var i = 0; i < docs.length; i++)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("-\t"),
+                          Text(
+                            docs[i]["userName"],
+                            style: const TextStyle(
+                              fontSize: 25,
+                            ),
+                          ),
+                        ],
+                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text("-\t"),
+                        Text(
+                          "...",
+                          style: TextStyle(
+                            fontSize: 25,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text("-\t"),
-                    Text(
-                      "...",
-                      style: TextStyle(
-                        fontSize: 25,
-                      ),
+                      ],
                     ),
                   ],
                 ),
                 MenuButton(
                   onClick: (() {}),
                   text: "Start",
-                  icon: Icons.logout,
+                  icon: Icons.start,
                 ),
               ],
             );
