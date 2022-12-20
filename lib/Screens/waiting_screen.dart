@@ -96,29 +96,17 @@ class WaitingScreen extends StatelessWidget {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text("-\t"),
                               Text(
                                 doc['Name'],
                                 style: const TextStyle(
                                   fontSize: 25,
                                 ),
                               ),
+                              const SizedBox(height: 40)
                             ],
                           );
                         },
                       ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text("-\t"),
-                        Text(
-                          "...",
-                          style: TextStyle(
-                            fontSize: 25,
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
                 MenuButton(
