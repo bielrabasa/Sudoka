@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nodefirstproj/Screens/menu_screen.dart';
 import 'package:nodefirstproj/Widget/back_arrow_question.dart';
@@ -13,12 +14,18 @@ class WaitingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final db = FirebaseFirestore.instance;
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+
     return Scaffold(
       appBar: AppBar(
           leading: BackArrowQuestion(
               question: "Do you want to exit the queue?",
               onExit: () {
                 //TUDU: erase from waiting players
+                FirebaseFirestore.instance
+                    .doc(
+                        "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
+                    .delete();
                 Navigator.of(context).popUntil((route) => route.isFirst);
               }),
           backgroundColor: Colors.black,

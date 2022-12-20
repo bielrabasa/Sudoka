@@ -80,7 +80,6 @@ class _LogedUserState extends State<LogedUser> {
           MenuButton(
             onClick: () {
               //TUDU: set player in the waiting list
-
               FirebaseFirestore.instance
                   .doc(
                       "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
