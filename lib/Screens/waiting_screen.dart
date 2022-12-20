@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nodefirstproj/Screens/menu_screen.dart';
 import 'package:nodefirstproj/Widget/back_arrow_question.dart';
+
+import '../Widget/doc_builder.dart';
 //import 'dart:math';
 
 class WaitingScreen extends StatelessWidget {
@@ -78,17 +80,25 @@ class WaitingScreen extends StatelessWidget {
                       height: 20,
                     ),
                     for (var i = 0; i < docs.length; i++)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("-\t"),
-                          Text(
-                            docs[i]["userName"],
-                            style: const TextStyle(
-                              fontSize: 25,
-                            ),
-                          ),
-                        ],
+                      DocSnapBuilder(
+                        docRef: db.doc("/Users/${docs[i]["userId"]}"),
+                        builder: (
+                          BuildContext context,
+                          DocumentSnapshot<Map<String, dynamic>> doc,
+                        ) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("-\t"),
+                              Text(
+                                doc['Name'],
+                                style: const TextStyle(
+                                  fontSize: 25,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

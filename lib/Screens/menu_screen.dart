@@ -71,6 +71,8 @@ class LogedUser extends StatefulWidget {
 class _LogedUserState extends State<LogedUser> {
   @override
   Widget build(BuildContext context) {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -78,6 +80,13 @@ class _LogedUserState extends State<LogedUser> {
           MenuButton(
             onClick: () {
               //TUDU: set player in the waiting list
+
+              FirebaseFirestore.instance
+                  .doc(
+                      "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
+                  .set({
+                'userId': userId,
+              });
               Navigator.pushNamed(context, "/waiting");
             },
             text: "Play Online",
