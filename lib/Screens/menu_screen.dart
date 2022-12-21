@@ -79,14 +79,49 @@ class _LogedUserState extends State<LogedUser> {
         children: [
           MenuButton(
             onClick: () {
-              //TUDU: set player in the waiting list
+              //isPlaying return
               FirebaseFirestore.instance
                   .doc(
                       "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
                   .set({
                 'userId': userId,
+                'totalTime': 0,
+                'parcentage': 0,
+                'hasFinished': false,
               });
-              Navigator.pushNamed(context, "/waiting");
+
+              bool isPlaying = false;
+
+              var docSnapshot = FirebaseFirestore.instance
+                  .doc("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
+                  .get();
+
+              /* if (docSnapshot.hasError) {
+                Map<String, dynamic>? data = docSnapshot.data();
+                isPlaying = data?['isPlaying'];
+              }*/
+
+              if (!isPlaying) {
+                Navigator.pushNamed(context, "/waiting");
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Warning'),
+                      content: const Text('The game is already start'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text('CONFIRM'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             },
             text: "Play Online",
             icon: Icons.wifi,
