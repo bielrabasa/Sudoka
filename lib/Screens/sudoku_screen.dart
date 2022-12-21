@@ -1,11 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:nodefirstproj/Functions/sudoku_creation.dart';
 import 'package:nodefirstproj/Widget/back_arrow_question.dart';
 import 'package:nodefirstproj/Widget/sudoku_cell.dart';
-import 'package:sudoku_solver_generator/sudoku_solver_generator.dart';
 
 class SudokuScreen extends StatefulWidget {
+  final bool online;
   const SudokuScreen({
     super.key,
+    required this.online,
   });
 
   @override
@@ -13,39 +17,54 @@ class SudokuScreen extends StatefulWidget {
 }
 
 class _SudokuScreenState extends State<SudokuScreen> {
+  SudokuClass sudokuClass = SudokuClass();
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.online) {
+      //Download sudoku from cloud
+      return FutureBuilder(
+        future: sudokuClass.getSudokuFromCloud(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return ErrorWidget(snapshot.error.toString());
+          }
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return SudokuGame(sudokuClass: sudokuClass);
+        },
+      );
+    } else {
+      //Generate my own sudoku
+      sudokuClass.createSudoku();
+      return SudokuGame(sudokuClass: sudokuClass);
+    }
+  }
+}
+
+class SudokuGame extends StatefulWidget {
+  final SudokuClass sudokuClass;
+
+  const SudokuGame({
+    super.key,
+    required this.sudokuClass,
+  });
+
+  @override
+  State<SudokuGame> createState() => _SudokuGameState();
+}
+
+class _SudokuGameState extends State<SudokuGame> {
   int? selectedIndex;
   String? selectedNumber;
 
   late String sudoku;
-  late String solvedSudoku;
   List<bool> blocked = [];
-
-  List<List<int>> generateSudoku() {
-    return SudokuGenerator(emptySquares: 50).newSudoku.toList();
-  }
-
-  String listToString(List<List<int>> list) {
-    String s = "";
-
-    //Clean strings
-    for (int i = 0; i < list.length; i++) {
-      for (int j = 0; j < list[i].length; j++) {
-        s += list[i][j].toString();
-      }
-    }
-
-    return s;
-  }
 
   @override
   void initState() {
-    //Create puzzle & solved sudoku
-    var sudolist = generateSudoku();
-    var sudolistsolved = SudokuSolver.solve(sudolist);
-
-    //Store in String variables
-    sudoku = listToString(sudolist);
-    solvedSudoku = listToString(sudolistsolved);
+    sudoku = widget.sudokuClass.sudoku;
 
     //Generate blocked cells
     for (int i = 0; i < sudoku.length; i++) {
@@ -236,7 +255,7 @@ class _SudokuScreenState extends State<SudokuScreen> {
               color: Colors.deepPurple[200]!,
               text: "Submit",
               onClick: () {
-                if (sudoku == solvedSudoku) {
+                if (sudoku == widget.sudokuClass.sudokuSolved) {
                   Navigator.popAndPushNamed(context, "/ranking");
                 }
               },
