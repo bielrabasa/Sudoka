@@ -72,7 +72,7 @@ class _LogedUserState extends State<LogedUser> {
   @override
   Widget build(BuildContext context) {
     String userId = FirebaseAuth.instance.currentUser!.uid;
-
+    //final partida = context.read
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -95,11 +95,6 @@ class _LogedUserState extends State<LogedUser> {
               var docSnapshot = FirebaseFirestore.instance
                   .doc("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
                   .get();
-
-              /* if (docSnapshot.hasError) {
-                Map<String, dynamic>? data = docSnapshot.data();
-                isPlaying = data?['isPlaying'];
-              }*/
 
               if (!isPlaying) {
                 Navigator.pushNamed(context, "/waiting");
