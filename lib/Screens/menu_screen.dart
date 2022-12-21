@@ -129,7 +129,7 @@ class _LogedUserState extends State<LogedUser> {
           const SizedBox(height: 40),
           MenuButton(
             onClick: () {
-              Navigator.pushNamed(context, "/sudoku");
+              Navigator.pushNamed(context, "/sudokuOffline");
             },
             text: "Play Offline",
             icon: Icons.home,
