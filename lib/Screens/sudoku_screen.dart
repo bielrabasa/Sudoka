@@ -25,11 +25,12 @@ class _SudokuScreenState extends State<SudokuScreen> {
       //Download sudoku from cloud
       return FutureBuilder(
         future: sudokuClass.getSudokuFromCloud(),
-        builder: (context, snapshot) {
+        builder: (context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasError) {
+            debugPrint((snapshot.error as Error).stackTrace.toString());
             return ErrorWidget(snapshot.error.toString());
           }
-          if (!snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
           return SudokuGame(sudokuClass: sudokuClass);

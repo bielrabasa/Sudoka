@@ -36,7 +36,7 @@ class SudokuClass {
 
     final instance = FirebaseFirestore.instance;
 
-    await instance.doc("TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y").set(
+    await instance.doc("TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y").update(
       {
         'Sudoku': sudoku,
         'SudokuSolution': sudokuSolved,
@@ -53,6 +53,6 @@ class SudokuClass {
       throw "getSudokuFromCloud: No hi ha dades";
     }
     sudoku = data['Sudoku'];
-    sudokuSolved = data['SudokuSolved'];
+    sudokuSolved = data['SudokuSolution'];
   }
 }
