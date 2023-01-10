@@ -117,6 +117,8 @@ class WaitingScreen extends StatelessWidget {
                   SudokuClass sudoku = SudokuClass();
                   await sudoku.pushSudokuToCloud();
 
+                  //is playing to True, read everyone
+
                   // ignore: use_build_context_synchronously
                   Navigator.pushNamed(context, "/sudokuOnline");
                 },
