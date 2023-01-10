@@ -25,7 +25,7 @@ class _SudokuScreenState extends State<SudokuScreen> {
       //Download sudoku from cloud
       return FutureBuilder(
         future: sudokuClass.getSudokuFromCloud(),
-        builder: (context, AsyncSnapshot<bool> snapshot) {
+        builder: (context, AsyncSnapshot<void> snapshot) {
           if (snapshot.hasError) {
             debugPrint((snapshot.error as Error).stackTrace.toString());
             return ErrorWidget(snapshot.error.toString());
