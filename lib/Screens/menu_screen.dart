@@ -84,9 +84,8 @@ class _LogedUserState extends State<LogedUser> {
                   .doc(
                       "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
                   .set({
-                'userId': userId,
                 'totalTime': 0,
-                'parcentage': 0,
+                'percentage': 0,
                 'hasFinished': false,
               });
 

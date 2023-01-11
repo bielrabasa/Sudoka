@@ -12,3 +12,10 @@ class Partida {
         gameOver = docsnap['gameOver'],
         isPlaying = docsnap['isPlaying'];
 }
+
+Stream<Partida> dbGetPartida(String roomId) async* {
+  final db = FirebaseFirestore.instance;
+  await for (final doc in db.doc("/TotalRoomsOnline/$roomId").snapshots()) {
+    yield Partida.fromFirestore(doc);
+  }
+}
