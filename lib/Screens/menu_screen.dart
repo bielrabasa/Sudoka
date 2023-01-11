@@ -78,7 +78,7 @@ class _LogedUserState extends State<LogedUser> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           MenuButton(
-            onClick: () {
+            onClick: () async {
               //isPlaying return
               FirebaseFirestore.instance
                   .doc(
@@ -91,13 +91,16 @@ class _LogedUserState extends State<LogedUser> {
               });
 
               bool isPlaying = false;
+              final navigator = Navigator.of(context);
 
-              var docSnapshot = FirebaseFirestore.instance
+              var docSnapshot = await FirebaseFirestore.instance
                   .doc("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
                   .get();
 
+              isPlaying = docSnapshot['isPlaying'];
+
               if (!isPlaying) {
-                Navigator.pushNamed(context, "/waiting");
+                navigator.pushNamed("/waiting");
               } else {
                 showDialog(
                   context: context,
