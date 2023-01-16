@@ -264,25 +264,11 @@ class _SudokuGameState extends State<SudokuGame> {
             child: SudokuCell(
               color: Colors.deepPurple[200]!,
               text: "Submit",
-              onClick: () async {
+              onClick: () {
                 if (sudoku == widget.sudokuClass.sudokuSolved) {
                   //VICTORY
                   if (widget.online) {
-                    String userId = FirebaseAuth.instance.currentUser!.uid;
-
-                    var room = await FirebaseFirestore.instance
-                        .doc("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
-                        .get();
-
-                    FirebaseFirestore.instance
-                        .doc(
-                            "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
-                        .update({
-                      'percentage': 0,
-                      'hasFinished': true,
-                      'totalTime': Timestamp.now().seconds -
-                          (room['startTime'] as Timestamp).seconds,
-                    });
+                    updateUserDataOnWin();
                     Navigator.popUntil(context, (route) => route.isFirst);
                     Navigator.pushNamed(context, "/ranking");
                   } else {
@@ -294,6 +280,53 @@ class _SudokuGameState extends State<SudokuGame> {
           )
         ],
       ),
+    );
+  }
+
+  void updateUserDataOnWin() async {
+    final String userId = FirebaseAuth.instance.currentUser!.uid;
+
+    var room = await FirebaseFirestore.instance
+        .doc("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
+        .get();
+
+    int gameTime = Timestamp.now().seconds - (room['startTime'] as Timestamp).seconds;
+
+    //Update game info
+    FirebaseFirestore.instance
+        .doc("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
+        .update(
+      {
+        'percentage': 0,
+        'hasFinished': true,
+        'totalTime': gameTime,
+      },
+    );
+
+    //Error line, can't await because of 'userId' parameter
+    //var userinfo = await FirebaseFirestore.instance.doc("/Users/$userId").get();
+
+    //int bettertime = userinfo['Better time'];
+    //if(gameTime < bettertime) bettertime = gameTime;
+
+    var players = await FirebaseFirestore.instance.collection("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom")
+    .orderBy('totalTime').get();
+
+    bool win = true;
+    for(final player in players.docs){
+      if(player['totalTime'] != 0){
+        win = false;
+      }
+    }
+
+    FirebaseFirestore.instance.doc("/Users/$userId").update(
+      {
+        //'Sudokus Complete': userinfo['Sudokus Complete'] + 1,
+        //'Better Time': bettertime,
+        'Last Time Play': room['startTime'] as Timestamp,
+        //'Win Streak': (win)? userinfo['Win Streak'] + 1 : 0,
+        //'Wins Online': userinfo['Wins Online'] + win,
+      },
     );
   }
 }
