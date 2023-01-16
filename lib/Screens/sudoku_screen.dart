@@ -103,7 +103,13 @@ class _SudokuGameState extends State<SudokuGame> {
         leading: BackArrowQuestion(
             question: "Do you want to forfeit?",
             onExit: () {
-              //TUDU: Set Current sudoku is failed (or forfeited)
+              if (widget.online) {
+                String userId = FirebaseAuth.instance.currentUser!.uid;
+                FirebaseFirestore.instance
+                    .doc(
+                        "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
+                    .delete();
+              }
               Navigator.of(context).popUntil((route) => route.isFirst);
             }),
         backgroundColor: Colors.black,
@@ -263,10 +269,10 @@ class _SudokuGameState extends State<SudokuGame> {
                   //VICTORY
                   if (widget.online) {
                     String userId = FirebaseAuth.instance.currentUser!.uid;
-                    
+
                     var room = await FirebaseFirestore.instance
-                          .doc("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
-                          .get();
+                        .doc("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
+                        .get();
 
                     FirebaseFirestore.instance
                         .doc(
@@ -274,7 +280,8 @@ class _SudokuGameState extends State<SudokuGame> {
                         .update({
                       'percentage': 0,
                       'hasFinished': true,
-                      'totalTime': Timestamp.now().seconds - (room['startTime'] as Timestamp).seconds,
+                      'totalTime': Timestamp.now().seconds -
+                          (room['startTime'] as Timestamp).seconds,
                     });
                     Navigator.popUntil(context, (route) => route.isFirst);
                     Navigator.pushNamed(context, "/ranking");

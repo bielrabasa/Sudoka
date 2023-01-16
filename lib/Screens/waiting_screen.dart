@@ -20,7 +20,7 @@ class WaitingScreen extends StatelessWidget {
     final navigator = Navigator.of(context);
     SchedulerBinding.instance.scheduleTask(() {
       navigator.pushReplacementNamed('/sudokuOnline');
-    }, Priority.idle);
+    }, Priority.animation);
   }
 
   @override
@@ -29,121 +29,122 @@ class WaitingScreen extends StatelessWidget {
     String userId = FirebaseAuth.instance.currentUser!.uid;
     final partida = context.read<Partida>();
     return PartidaSnapshot(
-        roomId: "GtHieM2C5bA4WCxTUc4y",
-        builder: (partida) {
-          if (partida.isPlaying) {
-            _goToGameScreen(context);
-          }
-          return Scaffold(
-            appBar: AppBar(
-                leading: BackArrowQuestion(
-                    question: "Do you want to exit the queue?",
-                    onExit: () {
-                      //erase from waiting players
-                      FirebaseFirestore.instance
-                          .doc(
-                              "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
-                          .delete();
-                      Navigator.of(context).popUntil((route) => route.isFirst);
-                    }),
-                backgroundColor: Colors.black,
-                title: Row(
+      roomId: "GtHieM2C5bA4WCxTUc4y",
+      builder: (partida) {
+        if (partida.isPlaying) {
+          _goToGameScreen(context);
+        }
+        return Scaffold(
+          appBar: AppBar(
+              leading: BackArrowQuestion(
+                  question: "Do you want to exit the queue?",
+                  onExit: () {
+                    //erase from waiting players
+                    FirebaseFirestore.instance
+                        .doc(
+                            "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
+                        .delete();
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                  }),
+              backgroundColor: Colors.black,
+              title: Row(
+                children: [
+                  const Text(
+                    "WAITING",
+                    style: TextStyle(
+                      fontSize: 37,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 12,
+                    ),
+                  ),
+                  AnimatedTextKit(
+                      animatedTexts: [
+                        TyperAnimatedText("...",
+                            textStyle: const TextStyle(
+                                fontSize: 37, fontWeight: FontWeight.bold),
+                            speed: const Duration(milliseconds: 500)),
+                      ],
+                      repeatForever: true,
+                      pause: const Duration(milliseconds: 50))
+                ],
+              )),
+          body: PlayerSnapshots(
+            roomId: "GtHieM2C5bA4WCxTUc4y",
+            builder: (List<Player> players) => Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const SizedBox(height: 50),
+                Column(
                   children: [
-                    const Text(
-                      "WAITING",
-                      style: TextStyle(
-                        fontSize: 37,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 12,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 150.0),
+                      child: Row(
+                        children: const [
+                          Text(
+                            "Room members\t\t",
+                            style: TextStyle(
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic),
+                          ),
+                        ],
                       ),
                     ),
-                    AnimatedTextKit(
-                        animatedTexts: [
-                          TyperAnimatedText("...",
-                              textStyle: const TextStyle(
-                                  fontSize: 37, fontWeight: FontWeight.bold),
-                              speed: const Duration(milliseconds: 500)),
-                        ],
-                        repeatForever: true,
-                        pause: const Duration(milliseconds: 50))
-                  ],
-                )),
-            body: PlayerSnapshots(
-              roomId: "GtHieM2C5bA4WCxTUc4y",
-              builder: (List<Player> players) => Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const SizedBox(height: 50),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 150.0),
-                        child: Row(
-                          children: const [
-                            Text(
-                              "Room members\t\t",
-                              style: TextStyle(
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      for (var i = 0; i < players.length; i++)
-                        DocSnapBuilder(
-                          docRef: db.doc("/Users/${players[i].userId}"),
-                          builder: (
-                            BuildContext context,
-                            DocumentSnapshot<Map<String, dynamic>> doc,
-                          ) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  doc['Name'],
-                                  style: const TextStyle(
-                                    fontSize: 25,
-                                  ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    for (var i = 0; i < players.length; i++)
+                      DocSnapBuilder(
+                        docRef: db.doc("/Users/${players[i].userId}"),
+                        builder: (
+                          BuildContext context,
+                          DocumentSnapshot<Map<String, dynamic>> doc,
+                        ) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                doc['Name'],
+                                style: const TextStyle(
+                                  fontSize: 25,
                                 ),
-                                const SizedBox(height: 40)
-                              ],
-                            );
-                          },
-                        ),
-                    ],
-                  ),
-                  MenuButton(
-                    onClick: () async {
-                      final firebase = FirebaseFirestore.instance;
-
-                      SudokuClass sudoku = SudokuClass();
-                      await sudoku.pushSudokuToCloud();
-
-                      //Update
-                      await firebase
-                          .doc("TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
-                          .update(
-                        {
-                          'isPlaying': true,
-                          'startTime': Timestamp.now(),
+                              ),
+                              const SizedBox(height: 40)
+                            ],
+                          );
                         },
-                      );
+                      ),
+                  ],
+                ),
+                MenuButton(
+                  onClick: () async {
+                    final firebase = FirebaseFirestore.instance;
 
-                      // ignore: use_build_context_synchronously
-                      Navigator.pushNamed(context, "/sudokuOnline");
-                    },
-                    text: "Start",
-                    icon: Icons.start,
-                  ),
-                ],
-              ),
+                    SudokuClass sudoku = SudokuClass();
+                    await sudoku.pushSudokuToCloud();
+
+                    //Update
+                    await firebase
+                        .doc("TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
+                        .update(
+                      {
+                        'isPlaying': true,
+                        'startTime': Timestamp.now(),
+                      },
+                    );
+
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushNamed(context, "/sudokuOnline");
+                  },
+                  text: "Start",
+                  icon: Icons.start,
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
 

@@ -79,16 +79,6 @@ class _LogedUserState extends State<LogedUser> {
         children: [
           MenuButton(
             onClick: () async {
-              //isPlaying return
-              FirebaseFirestore.instance
-                  .doc(
-                      "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
-                  .set({
-                'totalTime': 0,
-                'percentage': 0,
-                'hasFinished': false,
-              });
-
               bool isPlaying = false;
               final navigator = Navigator.of(context);
 
@@ -99,6 +89,15 @@ class _LogedUserState extends State<LogedUser> {
               isPlaying = docSnapshot['isPlaying'];
 
               if (!isPlaying) {
+                FirebaseFirestore.instance
+                    .doc(
+                        "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
+                    .set({
+                  'totalTime': 0,
+                  'percentage': 0,
+                  'hasFinished': false,
+                });
+
                 navigator.pushNamed("/waiting");
               } else {
                 showDialog(
