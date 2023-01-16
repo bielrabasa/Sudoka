@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:nodefirstproj/Functions/sudoku_creation.dart';
@@ -33,23 +34,25 @@ class _SudokuScreenState extends State<SudokuScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-          return SudokuGame(sudokuClass: sudokuClass);
+          return SudokuGame(sudokuClass: sudokuClass, online: true);
         },
       );
     } else {
       //Generate my own sudoku
       sudokuClass.createSudoku();
-      return SudokuGame(sudokuClass: sudokuClass);
+      return SudokuGame(sudokuClass: sudokuClass, online: false);
     }
   }
 }
 
 class SudokuGame extends StatefulWidget {
   final SudokuClass sudokuClass;
+  final bool online;
 
   const SudokuGame({
     super.key,
     required this.sudokuClass,
+    required this.online,
   });
 
   @override
@@ -255,9 +258,29 @@ class _SudokuGameState extends State<SudokuGame> {
             child: SudokuCell(
               color: Colors.deepPurple[200]!,
               text: "Submit",
-              onClick: () {
+              onClick: () async {
                 if (sudoku == widget.sudokuClass.sudokuSolved) {
-                  Navigator.popAndPushNamed(context, "/ranking");
+                  //VICTORY
+                  if (widget.online) {
+                    String userId = FirebaseAuth.instance.currentUser!.uid;
+                    
+                    var room = await FirebaseFirestore.instance
+                          .doc("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
+                          .get();
+
+                    FirebaseFirestore.instance
+                        .doc(
+                            "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
+                        .update({
+                      'percentage': 0,
+                      'hasFinished': true,
+                      'totalTime': Timestamp.now().seconds - (room['startTime'] as Timestamp).seconds,
+                    });
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                    Navigator.pushNamed(context, "/ranking");
+                  } else {
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  }
                 }
               },
             ),
