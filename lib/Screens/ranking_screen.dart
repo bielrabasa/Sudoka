@@ -30,40 +30,46 @@ class RankingScreen extends StatelessWidget {
           children: [
             Column(
               children: [
-                for (var i = 0; i < players.length; i++)
-                  DocSnapBuilder(
-                    docRef: db.doc("/Users/${players[i].userId}"),
-                    builder: (
-                      BuildContext context,
-                      DocumentSnapshot<Map<String, dynamic>> doc,
-                    ) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            doc['Name'],
-                            style: const TextStyle(
-                              fontSize: 25,
-                            ),
-                          ),
-                          const SizedBox(width: 100),
-                          Text(
-                            players[i].totalTime.toString(),
-                            style: const TextStyle(
-                              fontSize: 25,
-                            ),
-                          ),
-                          // ignore: prefer_const_constructors
-                          Text(
-                            " Seconds",
-                            style: const TextStyle(
-                              fontSize: 25,
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                const SizedBox(height: 50),
+                Column(
+                  children: [
+                    for (var i = 0; i < players.length; i++)
+                      DocSnapBuilder(
+                        docRef: db.doc("/Users/${players[i].userId}"),
+                        builder: (
+                          BuildContext context,
+                          DocumentSnapshot<Map<String, dynamic>> doc,
+                        ) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                doc['Name'],
+                                style: const TextStyle(
+                                  fontSize: 25,
+                                ),
+                              ),
+                              const SizedBox(width: 100),
+                              Text(
+                                players[i].totalTime.toString(),
+                                style: const TextStyle(
+                                  fontSize: 25,
+                                ),
+                              ),
+                              // ignore: prefer_const_constructors
+                              Text(
+                                " Seconds",
+                                style: const TextStyle(
+                                  fontSize: 25,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 50),
               ],
             ),
           ],
