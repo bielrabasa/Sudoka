@@ -15,7 +15,7 @@ class Player {
 
 Stream<List<Player>> dbGetRoomPlayers(String roomId) async* {
   final db = FirebaseFirestore.instance;
-  await for (final qsnap in db.collection("/TotalRoomsOnline/$roomId/UsersInRoom").snapshots()) {
+  await for (final qsnap in db.collection("/TotalRoomsOnline/$roomId/UsersInRoom").orderBy('totalTime').snapshots()) {
     List<Player> players = [];
     for (final doc in qsnap.docs) {
       players.add(Player.fromFirestore(doc));
