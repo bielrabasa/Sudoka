@@ -128,7 +128,7 @@ class WaitingScreen extends StatelessWidget {
                         .doc("TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
                         .update(
                       {
-                        'isPlaying': true,
+                        //'isPlaying': true,  //TUDU: uncomment
                         'startTime': Timestamp.now(),
                       },
                     );
