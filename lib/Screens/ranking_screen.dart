@@ -47,11 +47,30 @@ class RankingScreen extends StatelessWidget {
                               ) {
                                 return Column(
                                   children: [
-                                    Text(
-                                      doc['Name'],
-                                      style: const TextStyle(
-                                        fontSize: 25,
-                                      ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        if (i == 0)
+                                          const Icon(Icons.filter_1,
+                                              color: Color.fromARGB(
+                                                  255, 255, 223, 0)),
+                                        if (i == 1)
+                                          const Icon(Icons.filter_2,
+                                              color: Color.fromARGB(
+                                                  255, 168, 169, 173)),
+                                        if (i == 2)
+                                          const Icon(Icons.filter_3,
+                                              color: Color.fromARGB(
+                                                  255, 205, 127, 50)),
+                                        const SizedBox(height: 10, width: 15),
+                                        Text(
+                                          doc['Name'],
+                                          style: const TextStyle(
+                                            fontSize: 25,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     const SizedBox(height: 50),
                                   ],
