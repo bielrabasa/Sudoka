@@ -92,11 +92,26 @@ class _LogedUserState extends State<LogedUser> {
                 FirebaseFirestore.instance
                     .doc(
                         "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
-                    .set({
-                  'totalTime': 0,
-                  'percentage': 0,
-                  'hasFinished': false,
-                });
+                    .set(
+                  {
+                    'totalTime': 0,
+                    'percentage': 0,
+                    'hasFinished': false,
+                  },
+                );
+
+                if (docSnapshot['isWaiting'] == false) {
+                  //Delete all users
+                  final collection = await FirebaseFirestore.instance.collection("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom").get();
+                  for (final user in collection.docs){
+                      user.reference.delete();
+                  }
+
+                  //Set isWaiting
+                  FirebaseFirestore.instance
+                      .doc("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
+                      .update({'isWaiting': true});
+                }
 
                 navigator.pushNamed("/waiting");
               } else {

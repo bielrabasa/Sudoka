@@ -98,11 +98,11 @@ class _UserScreenState extends State<UserScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 75.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("Sudokus Complete:"),
+                        children: const [
+                          Text("Sudokus Complete:"),
                           Text(
-                            doc['Sudokus Complete'].toString(),
-                            style: const TextStyle(fontSize: 16),
+                            "Work in progress!",//doc['Sudokus Complete'].toString(),
+                            style: TextStyle(fontSize: 16),
                           ),
                         ],
                       ),
@@ -118,11 +118,11 @@ class _UserScreenState extends State<UserScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 75.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("Wins Online:"),
+                        children: const [
+                          Text("Wins Online:"),
                           Text(
-                            doc['Wins Online'].toString(),
-                            style: const TextStyle(fontSize: 16),
+                            "Work in progress!", //doc['Wins Online'].toString(),
+                            style: TextStyle(fontSize: 16),
                           ),
                         ],
                       ),
@@ -138,11 +138,11 @@ class _UserScreenState extends State<UserScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 75.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("Win Streak:"),
+                        children: const [
+                          Text("Win Streak:"),
                           Text(
-                            doc['Win Streak'].toString(),
-                            style: const TextStyle(fontSize: 16),
+                            "Work in progress!", //doc['Win Streak'].toString(),
+                            style: TextStyle(fontSize: 16),
                           ),
                         ],
                       ),
@@ -158,11 +158,11 @@ class _UserScreenState extends State<UserScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 75.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("Better Time:"),
+                        children: const[
+                          Text("Best Time:"),
                           Text(
-                            doc['Better Time'].toString(),
-                            style: const TextStyle(fontSize: 16),
+                            "Work in progress!", //doc['Better Time'].toString(),
+                            style: TextStyle(fontSize: 16),
                           ),
                         ],
                       ),
