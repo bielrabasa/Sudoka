@@ -89,17 +89,6 @@ class _LogedUserState extends State<LogedUser> {
               isPlaying = docSnapshot['isPlaying'];
 
               if (!isPlaying) {
-                FirebaseFirestore.instance
-                    .doc(
-                        "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
-                    .set(
-                  {
-                    'totalTime': 0,
-                    'percentage': 0,
-                    'hasFinished': false,
-                  },
-                );
-
                 if (docSnapshot['isWaiting'] == false) {
                   //Delete all users
                   final collection = await FirebaseFirestore.instance.collection("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom").get();
@@ -112,6 +101,18 @@ class _LogedUserState extends State<LogedUser> {
                       .doc("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
                       .update({'isWaiting': true});
                 }
+
+                //Add player to list
+                FirebaseFirestore.instance
+                    .doc(
+                        "/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom/$userId")
+                    .set(
+                  {
+                    'totalTime': 0,
+                    'percentage': 0,
+                    'hasFinished': false,
+                  },
+                );
 
                 navigator.pushNamed("/waiting");
               } else {
@@ -150,7 +151,7 @@ class _LogedUserState extends State<LogedUser> {
             onClick: () {
               Navigator.pushNamed(context, "/ranking");
             },
-            text: "Last game ranking",
+            text: "Ranking",
             icon: Icons.leaderboard,
           ),
         ],
