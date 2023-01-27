@@ -78,6 +78,26 @@ class _SudokuGameState extends State<SudokuGame> {
     super.initState();
   }
 
+  Future<bool> manageIfGameEnds() async {
+    final collection = await FirebaseFirestore.instance
+        .collection("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom")
+        .get();
+
+    //check if any user has not finished
+    for (final user in collection.docs) {
+      if (user['totalTime'] == 0) return false;
+    }
+
+    //reset is playing
+    FirebaseFirestore.instance
+        .doc("TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
+        .update({
+      'isPlaying': false,
+    });
+
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     //Resize Sudoku to leave space for everything
@@ -104,6 +124,7 @@ class _SudokuGameState extends State<SudokuGame> {
             question: "Do you want to forfeit?",
             onExit: () {
               if (widget.online) {
+                manageIfGameEnds();
                 String userId = FirebaseAuth.instance.currentUser!.uid;
                 FirebaseFirestore.instance
                     .doc(
@@ -204,7 +225,7 @@ class _SudokuGameState extends State<SudokuGame> {
           //Erase Button
           SizedBox(
             height: 50,
-            width: 200,
+            width: 150,
             child: SudokuCellIcon(
               icon: Icons.keyboard_backspace,
               color: Colors.deepPurple[200]!,
@@ -225,8 +246,8 @@ class _SudokuGameState extends State<SudokuGame> {
 
           //NumPad
           SizedBox(
-            height: 200,
-            width: 200,
+            height: 150,
+            width: 150,
             child: Center(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -268,6 +289,7 @@ class _SudokuGameState extends State<SudokuGame> {
                 if (sudoku == widget.sudokuClass.sudokuSolved) {
                   //VICTORY
                   if (widget.online) {
+                    manageIfGameEnds();
                     updateUserDataOnWin();
                     Navigator.popUntil(context, (route) => route.isFirst);
                     Navigator.pushNamed(context, "/ranking");
@@ -290,7 +312,8 @@ class _SudokuGameState extends State<SudokuGame> {
         .doc("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
         .get();
 
-    int gameTime = Timestamp.now().seconds - (room['startTime'] as Timestamp).seconds;
+    int gameTime =
+        Timestamp.now().seconds - (room['startTime'] as Timestamp).seconds;
 
     //Update game info
     FirebaseFirestore.instance
@@ -309,12 +332,14 @@ class _SudokuGameState extends State<SudokuGame> {
     //int bettertime = userinfo['Better time'];
     //if(gameTime < bettertime) bettertime = gameTime;
 
-    var players = await FirebaseFirestore.instance.collection("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom")
-    .orderBy('totalTime').get();
+    var players = await FirebaseFirestore.instance
+        .collection("/TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y/UsersInRoom")
+        .orderBy('totalTime')
+        .get();
 
     bool win = true;
-    for(final player in players.docs){
-      if(player['totalTime'] != 0){
+    for (final player in players.docs) {
+      if (player['totalTime'] != 0) {
         win = false;
       }
     }
