@@ -23,7 +23,7 @@ class SudokuClass {
 
   //GENERATE SUDOKUS
   void createSudoku() {
-    var sudolist = SudokuGenerator(emptySquares: 1).newSudoku.toList();
+    var sudolist = SudokuGenerator(emptySquares: 45).newSudoku.toList();
     var sudolistsolved = SudokuSolver.solve(sudolist);
 
     //Store in String variables
