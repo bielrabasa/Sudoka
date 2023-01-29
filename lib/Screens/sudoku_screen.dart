@@ -85,15 +85,17 @@ class _SudokuGameState extends State<SudokuGame> {
 
     //check if any user has not finished
     for (final user in collection.docs) {
-      if (user['totalTime'] == 0) return false;
+      if (!user['hasFinished']) return false;
     }
 
     //reset is playing
     FirebaseFirestore.instance
         .doc("TotalRoomsOnline/GtHieM2C5bA4WCxTUc4y")
-        .update({
-      'isPlaying': false,
-    });
+        .update(
+      {
+        'isPlaying': false,
+      },
+    );
 
     return true;
   }
